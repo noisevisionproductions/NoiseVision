@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(RegistrationStatsController.class)
 @Import({SecurityConfigTest.class, KafkaTestConfig.class})
 @AutoConfigureMockMvc
-public class RegistrationStatsControllerTest {
+public class LoginStatsControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -37,21 +37,21 @@ public class RegistrationStatsControllerTest {
 
     @Test
     void shouldReturnUnauthorizedWhenNoAuthentication() throws Exception {
-        mockMvc.perform(get("/api/kafka/stats/registrations"))
+        mockMvc.perform(get("/api/kafka/stats/logins"))
                 .andExpect(status().isUnauthorized());
     }
 
     @Test
     @WithMockUser(username = "test-user", authorities = "ACCESS_KAFKA_DASHBOARD")
     void shouldReturnOkWhenAuthenticated() throws Exception {
-        mockMvc.perform(get("/api/kafka/stats/registrations"))
+        mockMvc.perform(get("/api/kafka/stats/logins"))
                 .andExpect(status().isOk());
     }
 
     @Test
     @WithMockUser(authorities = "USER")
     void shouldReturnForbiddenForNonAdminUser() throws Exception {
-        mockMvc.perform(get("/api/kafka/stats/registrations"))
+        mockMvc.perform(get("/api/kafka/stats/logins"))
                 .andExpect(status().isForbidden());
     }
 }

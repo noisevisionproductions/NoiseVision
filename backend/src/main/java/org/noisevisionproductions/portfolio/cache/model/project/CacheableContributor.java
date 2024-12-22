@@ -6,7 +6,6 @@ import org.noisevisionproductions.portfolio.projectsManagement.model.Contributor
 
 import java.io.Serializable;
 
-
 @Data
 @NoArgsConstructor
 public class CacheableContributor implements Serializable {

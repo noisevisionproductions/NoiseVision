@@ -154,32 +154,53 @@ export const translations = {
             deleteImageError: "Błąd podczas usuwania obrazu"
         },
         kafka: {
+            dashboard: {
+                menu: {
+                    overview: "Przegląd",
+                    registrations: "Rejestracje"
+                },
+                registrations: {
+                    title: 'Panel Statystyk Rejestracji',
+                    chart: {
+                        title: 'Statystyki Rejestracji (7 dni)'
+                    },
+                    recent: {
+                        title: 'Ostatnie Rejestracje'
+                    },
+                    table: {
+                        status: 'Status',
+                        email: 'Email',
+                        date: 'Data',
+                        source: 'Źródło',
+                        noData: 'Brak danych do wyświetlenia'
+                    },
+                    stats: {
+                        total: 'Wszystkie Rejestracje',
+                        successful: 'Udane Rejestracje',
+                        failed: 'Nieudane Rejestracje',
+                        successRate: 'Współczynnik Sukcesu'
+                    }
+                },
+                overview: {
+                    title: 'Przegląd systemu',
+                    totalRegistrations: 'Wszystkie rejestracje',
+                    totalRegistrationsDesc: 'Łączna liczba rejestracji w systemie',
+                    registrationSuccess: 'Skuteczność rejestracji',
+                    registrationSuccessDesc: 'Procent udanych rejestracji',
+                    totalProjects: 'Liczba projektów',
+                    totalProjectsDesc: 'Łączna liczba projektów w systemie',
+                    systemMetrics: 'Dostępność systemu',
+                    systemMetricsDesc: 'Średnia dostępność systemu',
+                    recentActivity: 'Ostatnia aktywność',
+                    noRecentActivity: 'Brak ostatniej aktywności',
+                    quickActions: 'Szybkie akcje',
+                    noQuickActions: 'Brak dostępnych akcji'
+                },
+            },
             errors: {
                 statsFetchFailed: "Błąd podczas pobierania statystyk",
-                recentRegistrationsFetchFailed: "Błąd podczas pobierania ostatnich rejestracji",
-                registrationsForPeriodFetchFailed: "Błąd podczas pobierania rejestracji z wybranego okresu"
-            },
-            dashboard: {
-                title: 'Panel statystyk rejestracji',
-                chart: {
-                    title: 'Statystyki rejestracji (7 dni)'
-                },
-                recent: {
-                    title: 'Ostatnie rejestracje'
-                }
-            },
-            stats: {
-                total: 'Wszystkie rejestracje',
-                successful: 'Udane rejestracje',
-                failed: 'Nieudane rejestracje',
-                successRate: 'Wskaźnik sukcesu'
-            },
-            table: {
-                status: 'Status',
-                email: 'Email',
-                date: 'Data',
-                source: 'Źródło',
-                noData: 'Brak danych do wyświetlenia'
+                recentRegistrationsFetchFailed: "Błąd podczas pobierania ostatnich zdarzeń",
+                registrationsForPeriodFetchFailed: "Błąd podczas pobierania zdarzeń z okresu"
             }
         }
     },
@@ -340,34 +361,55 @@ export const translations = {
             deleteImageError: "Error occurred while deleting image"
         },
         kafka: {
+            dashboard: {
+                menu: {
+                    overview: "Overview",
+                    registrations: "Registrations"
+                },
+                registrations: {
+                    title: 'Registration Statistics Dashboard',
+                    chart: {
+                        title: 'Registration Statistics (7 days)'
+                    },
+                    recent: {
+                        title: 'Recent Registrations'
+                    },
+                    table: {
+                        status: 'Status',
+                        email: 'Email',
+                        date: 'Date',
+                        source: 'Source',
+                        noData: 'No data to display'
+                    },
+                    stats: {
+                        total: 'Total Registrations',
+                        successful: 'Successful Registrations',
+                        failed: 'Failed Registrations',
+                        successRate: 'Success Rate'
+                    }
+                },
+                overview: {
+                    title: 'System Overview',
+                    totalRegistrations: 'Total Registrations',
+                    totalRegistrationsDesc: 'Total number of registrations in system',
+                    registrationSuccess: 'Registration Success',
+                    registrationSuccessDesc: 'Percentage of successful registrations',
+                    totalProjects: 'Total Projects',
+                    totalProjectsDesc: 'Total number of projects in system',
+                    systemMetrics: 'System Availability',
+                    systemMetricsDesc: 'Average system availability',
+                    recentActivity: 'Recent Activity',
+                    noRecentActivity: 'No recent activity',
+                    quickActions: 'Quick Actions',
+                    noQuickActions: 'No actions available'
+                },
+            },
             errors: {
                 statsFetchFailed: "Error fetching stats",
                 recentRegistrationsFetchFailed: "Error fetching recent events",
                 registrationsForPeriodFetchFailed: "Error fetching period events"
             }
         },
-        dashboard: {
-            title: 'Registration Statistics Dashboard',
-            chart: {
-                title: 'Registration Statistics (7 days)'
-            },
-            recent: {
-                title: 'Recent Registrations'
-            }
-        },
-        stats: {
-            total: 'Total Registrations',
-            successful: 'Successful Registrations',
-            failed: 'Failed Registrations',
-            successRate: 'Success Rate'
-        },
-        table: {
-            status: 'Status',
-            email: 'Email',
-            date: 'Date',
-            source: 'Source',
-            noData: 'No data to display'
-        }
     }
 };
 

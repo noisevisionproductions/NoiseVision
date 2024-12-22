@@ -3,7 +3,7 @@ package org.noisevisionproductions.portfolio.kafka.controller;
 import org.noisevisionproductions.portfolio.kafka.controller.base.BaseKafkaStatsController;
 import org.noisevisionproductions.portfolio.kafka.event.model.RegistrationEventEntity;
 import org.noisevisionproductions.portfolio.kafka.event.model.RegistrationStats;
-import org.noisevisionproductions.portfolio.kafka.service.stats.RegistrationStatsService;
+import org.noisevisionproductions.portfolio.kafka.stats.RegistrationStatsService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;

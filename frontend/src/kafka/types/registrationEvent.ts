@@ -14,7 +14,7 @@ export interface RegistrationEvent extends BaseEvent {
 
 export interface RegistrationStats {
     totalRegistrations: number;
-    successfulRegistration: number;
+    successfulRegistrations: number;
     failedRegistrations: number;
     successRate: number;
     recentEvents: RegistrationEvent[];

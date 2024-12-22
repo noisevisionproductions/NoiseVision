@@ -33,13 +33,9 @@ public class RegistrationEventConsumer implements KafkaEventConsumer<UserRegistr
         }
 
         try {
-            log.info("Received registration event for user: {}", event.getEmail());
-
             RegistrationEventEntity eventEntity = getRegistrationEventEntity(event);
 
             eventRepository.save(eventEntity);
-
-            log.info("Successfully processed registration event for user: {}", event.getEmail());
         } catch (Exception e) {
             log.error("Error processing registration event for user: {}", event.getEmail(), e);
         }

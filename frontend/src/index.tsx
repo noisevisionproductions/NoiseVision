@@ -9,7 +9,7 @@ import {
     createRoutesFromElements,
     Route
 } from "react-router-dom";
-import {routes} from "./routes";
+import {headerRoutes} from "./routes/HeaderRoutes";
 
 const routerConfig = {
     future: {
@@ -25,7 +25,7 @@ const routerConfig = {
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route element={<App/>}>
-            {routes}
+            {headerRoutes}
         </Route>
     ),
     routerConfig

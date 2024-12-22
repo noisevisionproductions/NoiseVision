@@ -55,7 +55,6 @@ public class ProjectImageServiceIntegrationTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-
         projectRepository.deleteAll();
 
         ProjectDTO projectDTO = new ProjectDTO();
