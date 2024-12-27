@@ -64,3 +64,6 @@ application-dev.properties
 
 # Swagger documentation
 **/target/swaggerr-ui
+
+*.mmdb
+GeoLite2-City.mmdb

@@ -35,7 +35,7 @@ public class RegistrationService {
 
     public AuthResponse register(RegisterRequest registerRequest, HttpServletRequest request) {
         String ipAddress = ipAddressExtractor.getClientIpAddress(request);
-        /*registrationRateLimiter.canRegister(ipAddress);*/
+        registrationRateLimiter.canRegister(ipAddress);
 
         try {
             if (userRepository.existsByEmail(registerRequest.email())) {
@@ -44,9 +44,7 @@ public class RegistrationService {
             }
 
             UserModel savedUser = createAndSaveUser(registerRequest);
-/*
             registrationRateLimiter.registerSuccessfulRegistration(ipAddress);
-*/
             publishRegistrationEvent(savedUser, ipAddress, request.getHeader("User-Agent"));
 
             String token = jwtService.generateToken(savedUser);
