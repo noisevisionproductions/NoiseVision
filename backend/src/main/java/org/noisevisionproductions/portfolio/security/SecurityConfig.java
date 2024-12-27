@@ -57,7 +57,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/files/**").permitAll()
                         .requestMatchers("/api/errors/**").permitAll()
                         .requestMatchers("/api/auth/me").authenticated()
-                        .requestMatchers("/api/kafka/**").hasAuthority("ACCESS_KAFKA_DASHBOARD")
+                        .requestMatchers("/api/kafka/**", "/api/geoip/**").hasAuthority("ACCESS_KAFKA_DASHBOARD")
                         .requestMatchers(HttpMethod.POST, "/api/projects/**").hasAuthority("CREATE_PROJECTS")
                         .requestMatchers(HttpMethod.PUT, "/api/projects/**").hasAuthority("EDIT_PROJECTS")
                         .requestMatchers(HttpMethod.DELETE, "/api/projects/**").hasAuthority("DELETE_PROJECTS")
@@ -79,6 +79,10 @@ public class SecurityConfig {
         configuration.setAllowedHeaders(Arrays.asList(
                 "Authorization",
                 "Content-Type",
+                "X-Forwarded-For",
+                "X-Forwarded-Host",
+                "X-Forwarded-Proto",
+                "X-Real-IP",
                 "Access-Control-Allow-Origin",
                 "Access-Control-Allow-Methods",
                 "Access-Control-Allow-Headers",

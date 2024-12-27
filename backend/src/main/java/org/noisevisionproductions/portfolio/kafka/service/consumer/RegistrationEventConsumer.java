@@ -5,8 +5,12 @@ import org.noisevisionproductions.portfolio.kafka.event.dto.UserRegistrationEven
 import org.noisevisionproductions.portfolio.kafka.event.model.RegistrationEventEntity;
 import org.noisevisionproductions.portfolio.kafka.repository.RegistrationEventRepository;
 import org.noisevisionproductions.portfolio.kafka.service.base.KafkaEventConsumer;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 @Slf4j
@@ -35,23 +39,31 @@ public class RegistrationEventConsumer implements KafkaEventConsumer<UserRegistr
         try {
             RegistrationEventEntity eventEntity = getRegistrationEventEntity(event);
 
-            eventRepository.save(eventEntity);
+            RegistrationEventEntity savedEntity = eventRepository.save(eventEntity);
+            log.info("Successfully saved registration event with ID: {}", savedEntity.getId());
         } catch (Exception e) {
-            log.error("Error processing registration event for user: {}", event.getEmail(), e);
+            log.error("Error processing registration event: {}", event, e);
         }
     }
 
     private static RegistrationEventEntity getRegistrationEventEntity(UserRegistrationEvent event) {
         RegistrationEventEntity eventEntity = new RegistrationEventEntity();
+
+        eventEntity.setEventId(event.getEventId());
+        eventEntity.setEventType(event.getEventType());
+        eventEntity.setTimestamp(event.getTimestamp());
+        eventEntity.setStatus(event.getStatus());
+
         eventEntity.setUserId(event.getUserId());
         eventEntity.setEmail(event.getEmail());
         eventEntity.setName(event.getName());
         eventEntity.setCompanyName(event.getCompanyName());
-        eventEntity.setTimestamp(event.getTimestamp());
-        eventEntity.setStatus(event.getStatus());
-        eventEntity.setEventId(event.getEventId());
-        eventEntity.setEventType(event.getEventType());
         eventEntity.setRegistrationTime(event.getRegistrationTime());
+
+        eventEntity.setIpAddress(event.getIpAddress());
+        eventEntity.setUserAgent(event.getUserAgent());
+        eventEntity.setRegistrationSource(event.getRegistrationSource());
+
         return eventEntity;
     }
 

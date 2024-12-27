@@ -4,11 +4,13 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.noisevisionproductions.portfolio.kafka.event.base.BaseEventEntity;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "registration_events")
+@EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
 public class RegistrationEventEntity extends BaseEventEntity {
@@ -42,7 +44,7 @@ public class RegistrationEventEntity extends BaseEventEntity {
     private String registrationSource;
 
     @PrePersist
-    private void onCreate() {
+    public void onCreate() {
         if (registrationTime == null) {
             registrationTime = LocalDateTime.now();
         }

@@ -22,12 +22,9 @@ public class RegistrationEventProducer implements KafkaEventProducer<UserRegistr
 
     @Override
     public void sendEvent(UserRegistrationEvent event) {
-        if (event == null) {
-            log.warn("Attempted to send null registration event");
-            CompletableFuture.failedFuture(
-                    new IllegalArgumentException("Event cannot be null")
-            );
-            return;
+        if (event.getEventId() == null || event.getEventType() == null) {
+            log.warn("Event has null required fields: eventId={}, eventType={}",
+                    event.getEventId(), event.getEventType());
         }
 
         CompletableFuture<SendResult<String, Object>> future = kafkaTemplate.send(

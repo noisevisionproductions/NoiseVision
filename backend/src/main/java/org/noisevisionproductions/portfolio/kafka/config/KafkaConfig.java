@@ -3,6 +3,7 @@ package org.noisevisionproductions.portfolio.kafka.config;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.clients.producer.ProducerInterceptor;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.noisevisionproductions.portfolio.kafka.event.dto.UserRegistrationEvent;

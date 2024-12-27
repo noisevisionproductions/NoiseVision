@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,7 +35,7 @@ public class RegistrationService {
 
     public AuthResponse register(RegisterRequest registerRequest, HttpServletRequest request) {
         String ipAddress = ipAddressExtractor.getClientIpAddress(request);
-        registrationRateLimiter.canRegister(ipAddress);
+        /*registrationRateLimiter.canRegister(ipAddress);*/
 
         try {
             if (userRepository.existsByEmail(registerRequest.email())) {
@@ -43,7 +44,9 @@ public class RegistrationService {
             }
 
             UserModel savedUser = createAndSaveUser(registerRequest);
+/*
             registrationRateLimiter.registerSuccessfulRegistration(ipAddress);
+*/
             publishRegistrationEvent(savedUser, ipAddress, request.getHeader("User-Agent"));
 
             String token = jwtService.generateToken(savedUser);
@@ -70,11 +73,13 @@ public class RegistrationService {
 
     private void publishRegistrationEvent(UserModel user, String ipAddress, String userAgent) {
         UserRegistrationEvent event = UserRegistrationEvent.builder()
+                .eventId(UUID.randomUUID().toString())
+                .eventType("USER_REGISTRATION")
+                .timestamp(LocalDateTime.now())
                 .userId(user.getId().toString())
                 .email(user.getEmail())
                 .name(user.getName())
                 .companyName(user.getCompanyName())
-                .timestamp(LocalDateTime.now())
                 .status(EventStatus.SUCCESS)
                 .registrationTime(LocalDateTime.now())
                 .ipAddress(ipAddress)
@@ -96,6 +101,8 @@ public class RegistrationService {
                 .ipAddress(ipAddress)
                 .userAgent(userAgent)
                 .registrationSource("WEB")
+                .eventId(UUID.randomUUID().toString())
+                .eventType("USER_REGISTRATION")
                 .build();
 
         registrationEventProducer.sendEvent(event);

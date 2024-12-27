@@ -17,15 +17,10 @@ COPY ../src ./src/
 
 RUN npm run build
 
-RUN ls -la dist/
-
 FROM nginx:alpine
 
 COPY --from=build /app/dist /usr/share/nginx/html
-
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-RUN ls -la /usr/share/nginx/html/
+COPY ../../nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 

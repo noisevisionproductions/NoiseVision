@@ -67,13 +67,17 @@ spring:
 
 logging:
   level:
+
     root: INFO
     org:
+      apache:
+        kafka: WARN
       springframework:
         boot:
         web: DEBUG
         security: DEBUG
         '*': INFO
+        kafka: WARN
       hibernate: INFO
       noisevisionproductions:
         portfolio: DEBUG

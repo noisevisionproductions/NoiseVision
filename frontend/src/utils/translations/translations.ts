@@ -8,7 +8,10 @@ export const translations = {
             backToHome: "Wróć do strony głównej",
             loading: "Ładowanie...",
             redirecting: "Przekierowywanie...",
-            continue: "Kontynuuj"
+            continue: "Kontynuuj",
+            other: "Inny",
+            unknown: "Nieznany",
+            invalidIp: "Nieprawidłowe IP",
         },
         errors: {
             noPermissions: "Brak uprawnień do wykonania tej akcji",
@@ -161,6 +164,9 @@ export const translations = {
                 },
                 registrations: {
                     title: 'Panel Statystyk Rejestracji',
+                    timeAnalysis: "Analiza czasowa",
+                    latestRegistrations: "Ostatnie rejestracje",
+                    registrationsCount: "Liczba rejestracji",
                     chart: {
                         title: 'Statystyki Rejestracji (7 dni)'
                     },
@@ -179,6 +185,13 @@ export const translations = {
                         successful: 'Udane Rejestracje',
                         failed: 'Nieudane Rejestracje',
                         successRate: 'Współczynnik Sukcesu'
+                    },
+                    registrationSources: {
+                        registrationSource: "Źródło rejestracji",
+                        registrationSources: "Źródła rejestracji",
+                        browsers: "Przeglądarki użytkowników",
+                        schedule: "Przegląd rejestracji w ciągu dnia",
+                        geoDistribution: "Dystrybucja geograficzna"
                     }
                 },
                 overview: {
@@ -213,7 +226,10 @@ export const translations = {
             backToHome: "Back to main page",
             loading: "Loading...",
             redirecting: "Redirecting...",
-            continue: "Continue"
+            continue: "Continue",
+            other: "Other",
+            unknown: "Unknown",
+            invalidIp: "Invalid IP",
         },
         errors: {
             noPermissions: "You don't have permission to perform this action",
@@ -368,6 +384,9 @@ export const translations = {
                 },
                 registrations: {
                     title: 'Registration Statistics Dashboard',
+                    timeAnalysis: "Time analysis",
+                    latestRegistrations: "Latest registrations",
+                    registrationsCount: "Number of registrations",
                     chart: {
                         title: 'Registration Statistics (7 days)'
                     },
@@ -386,6 +405,13 @@ export const translations = {
                         successful: 'Successful Registrations',
                         failed: 'Failed Registrations',
                         successRate: 'Success Rate'
+                    },
+                    registrationSources: {
+                        registrationSources: "Registration sources",
+                        registrationSource: "Registration source",
+                        browsers: "User's browsers",
+                        schedule: "Registration schedule for the day",
+                        geoDistribution: "Geographic distribution"
                     }
                 },
                 overview: {

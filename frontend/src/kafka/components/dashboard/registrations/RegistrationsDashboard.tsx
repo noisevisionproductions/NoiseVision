@@ -5,8 +5,10 @@ import {Loader2} from "lucide-react";
 import {ErrorMessage} from "@/components/shared/ErrorMessage";
 import {useNavigate} from "react-router-dom";
 import {StatsOverview} from "@/kafka/components/dashboard/registrations/StatsOverview";
-import {RegistrationsChart} from "@/kafka/components/dashboard/registrations/RegistrationsChart";
 import {RecentRegistrations} from "@/kafka/components/dashboard/registrations/RecentRegistrations";
+import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/Tabs";
+import {RegistrationSources} from "@/kafka/components/dashboard/registrations/RegistrationSources";
+import {RegistrationTimeAnalysis} from "@/kafka/components/dashboard/registrations/RegistrationTimeAnalysis";
 
 export const RegistrationsDashboard: React.FC = () => {
     const {t} = useTranslation();
@@ -40,20 +42,33 @@ export const RegistrationsDashboard: React.FC = () => {
             {stats && (
                 <div className="space-y-6">
                     <StatsOverview stats={stats}/>
-                    <div className="grid md:grid-cols-2 gap-6">
-                        <div className="bg-white rounded-lg shadow p-6">
-                            <h2 className="text-xl font-semibold mb-4">
-                                {t('kafka.dashboard.registrations.chart.title')}
-                            </h2>
-                            <RegistrationsChart events={recentEvents}/>
-                        </div>
-                        <div className="bg-white rounded-lg shadow p-6">
-                            <h2 className="text-xl font-semibold mb-4">
-                                {t('kafka.dashboard.registrations.recent.title')}
-                            </h2>
-                            <RecentRegistrations events={recentEvents}/>
-                        </div>
-                    </div>
+
+                    <Tabs defaultValue="sources" className="w-full">
+                        <TabsList>
+                            <TabsTrigger value="sources">
+                                {t('kafka.dashboard.registrations.registrationSources.registrationSources')}
+                            </TabsTrigger>
+                            <TabsTrigger value="time">
+                                {t('kafka.dashboard.registrations.timeAnalysis')}
+                            </TabsTrigger>
+                            <TabsTrigger value="recent">
+                                {t('kafka.dashboard.registrations.latestRegistrations')}
+                            </TabsTrigger>
+                        </TabsList>
+                        <TabsContent value="sources">
+                            <RegistrationSources events={recentEvents}/>
+                        </TabsContent>
+
+                        <TabsContent value="time">
+                            <RegistrationTimeAnalysis events={recentEvents}/>
+                        </TabsContent>
+
+                        <TabsContent value="recent">
+                            <div className="bg-white rounded-lg shadow p-6">
+                                <RecentRegistrations events={recentEvents}/>
+                            </div>
+                        </TabsContent>
+                    </Tabs>
                 </div>
             )}
         </div>
