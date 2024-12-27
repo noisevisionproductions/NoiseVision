@@ -77,7 +77,7 @@ describe('useRegistrationStats Authorization Tests', () => {
     test('should handle successful authorized access', async () => {
         const mockStats: RegistrationStats = {
             totalRegistrations: 100,
-            successfulRegistration: 90,
+            successfulRegistrations: 90,
             failedRegistrations: 10,
             successRate: 0.9,
             recentEvents: [{
@@ -113,7 +113,7 @@ describe('useRegistrationStats Authorization Tests', () => {
 describe('useRegistrationStats', () => {
     const mockStats = {
         totalRegistrations: 100,
-        successfulRegistration: 90,
+        successfulRegistrations: 90,
         failedRegistrations: 10,
         successRate: 0.9,
         recentEvents: []

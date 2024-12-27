@@ -15,6 +15,5 @@ public class PortfolioApplication {
         SpringApplication springApplication = new SpringApplication(PortfolioApplication.class);
         springApplication.setAdditionalProfiles("dev");
         springApplication.run(args);
-
     }
 }

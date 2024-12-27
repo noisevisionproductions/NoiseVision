@@ -67,3 +67,4 @@ application-dev.properties
 
 *.mmdb
 GeoLite2-City.mmdb**/GeoLite2-City.mmdb
+backend/src/main/resources/GeoLite2-City.mmdb
