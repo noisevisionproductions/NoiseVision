@@ -5,13 +5,13 @@ import * as path from "node:path";
 export default defineConfig({
     plugins: [react()],
     define: {
-        __API_URL__: JSON.stringify(process.env.VITE_API_URL),
+        __API_URL__: JSON.stringify(process.env.VITE_API_URL || 'https://backend-service-dot-noisevision.appspot.com'),
     },
     base: '/',
     build: {
         outDir: 'dist',
         assetsDir: 'assets',
-        sourcemap: true,
+        sourcemap: false,
         emptyOutDir: true
     },
     resolve: {
@@ -20,30 +20,16 @@ export default defineConfig({
         },
     },
     server: {
-        port: 3000,
-        host: true,
+        port: Number(process.env.PORT) || 3000,
+        host: '0.0.0.0',
         open: true,
         strictPort: true,
-        watch: {
-            ignored: [
-                '**/node_modules/**',
-                '**/dist/**',
-                '**/.git/**',
-                '**/public/**',
-                '**/test/**',
-                '**/coverage/**'
-            ],
-            usePolling: true,
-        },
         proxy: {
             '/api': {
-                target: 'http://localhost:8080',
+                target: process.env.VITE_API_URL || 'http://localhost:8080',
                 changeOrigin: true,
                 secure: false
             }
-        },
-        hmr: {
-            overlay: false
         }
     }
 });

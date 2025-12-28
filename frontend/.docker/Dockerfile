@@ -1,26 +1,17 @@
-FROM node:18-alpine as build
+# frontend/.docker/Dockerfile
+FROM node:18-alpine AS builder
 
 WORKDIR /app
 
-COPY ../package.json .
-COPY ../package-lock.json .
-COPY ../tsconfig.json .
-COPY ../vite.config.ts .
-COPY ../index.html .
-COPY ../postcss.config.js .
-COPY ../tailwind.config.js .
+COPY . .
 
-RUN npm ci
-
-COPY ../public ./public/
-COPY ../src ./src/
-
-RUN npm run build
+RUN npm ci --prefer-offline && \
+    npm run build
 
 FROM nginx:alpine
 
-COPY --from=build /app/dist /usr/share/nginx/html
-COPY ../../nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
+COPY .docker/nginx/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /app/dist /usr/share/nginx/html
 
 EXPOSE 80
 

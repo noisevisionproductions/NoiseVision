@@ -1,0 +1,141 @@
+spring:
+  application:
+    name: noisevision
+
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:prod}
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 300000
+      connection-timeout: 20000
+      max-lifetime: 1200000
+
+  redis:
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT}
+    database: 0
+    timeout: 60000
+    serializer: org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer
+
+  kafka:
+    bootstrap-servers: ${KAFKA_SERVERS}
+    producer:
+      retries: 3
+      batch-size: 16384
+      buffer-memory: 33554432
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        acks: all
+        compression.type: snappy
+    consumer:
+      group-id: portfolio-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "org.noisevisionproductions.noisevision.kafka.event.dto"
+        isolation.level: read_committed
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none # Wa?ne: w produkcji nie u?ywamy auto-update
+    properties:
+      hibernate:
+        jdbc.batch_size: 50
+        order_inserts: true
+        order_updates: true
+        connection.provider_disables_autocommit: true
+
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+  web:
+    resources:
+      static-locations: classpath:/static/,file:${file.upload-dir}/
+      cache:
+        period: 86400 # 24 godziny
+    cors:
+      allowed-origins: ${ALLOWED_ORIGINS}
+      allowed-methods: GET,POST,PUT,DELETE,OPTIONS
+      allowed-headers: '*'
+      allow-credentials: true
+      max-age: 3600
+
+logging:
+  level:
+    root: WARN
+    org:
+      springframework: INFO
+      hibernate: WARN
+      noisevisionproductions: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: /var/log/noisevision/application.log
+    max-size: 10MB
+    max-history: 10
+
+file:
+  upload-dir: ${UPLOAD_DIR:/app/uploads}
+
+springdoc:
+  show-actuator: false # Wy??czamy w produkcji
+  swagger-ui:
+    enabled: false # Wy??czamy w produkcji
+
+application:
+  security:
+    jwt:
+      secret-key: ${JWT_SECRET_KEY}
+      expiration: ${JWT_EXPIRATION:86400000}
+      refresh-token:
+        expiration: ${JWT_REFRESH_EXPIRATION:604800000}
+
+server:
+  error:
+    include-message: never
+    include-binding-errors: never
+    include-stacktrace: never
+  tomcat:
+    max-threads: 200
+    min-spare-threads: 20
+    max-connections: 10000
+    accept-count: 100
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,application/javascript,application/json
+    min-response-size: 1024
+  port: ${PORT:8080}
+  address: 0.0.0.0
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics,prometheus,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: always
+      group:
+        readiness:
+          include: db,redis,kafka
+        liveness:
+          include: ping
+  metrics:
+    tags:
+      application: ${spring.application.name}

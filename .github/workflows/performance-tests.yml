@@ -2,7 +2,7 @@ name: Performance Tests
 
 on:
   workflow_run:
-    workflows: [ "Portfolio CI" ]
+    workflows: [ "NoiseVision CI" ]
     types: [ completed ]
     branches: [ master ]
 
@@ -17,19 +17,19 @@ jobs:
       JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
       DB_HOST: localhost
       DB_PORT: 5432
-      DB_NAME: portfolio
+      DB_NAME: noisevision
       DB_USER: postgres
-      DB_PASSWORD: postgres
+      DB_PASSWORD: ${POSTGRES_PASSWORD_DEV}
       SERVER_PORT: 8080
-      SPRING_DATASOURCE_URL: "jdbc:postgresql://localhost:5432/portfolio"
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://localhost:5432/noisevision"
 
     services:
       postgres:
         image: postgres:latest
         env:
-          POSTGRES_DB: portfolio
+          POSTGRES_DB: noisevision
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
+          DB_PASSWORD: ${POSTGRES_PASSWORD_DEV}
         ports:
           - 5432:5432
         options: >-
@@ -96,7 +96,7 @@ jobs:
             -Dspring.config.location=classpath:/key.properties \
             -Dspring-boot.run.jvmArguments="\
             -Djwt.secret.key=${JWT_SECRET_KEY} \
-            -Dspring.datasource.url=jdbc:postgresql://localhost:5432/portfolio \
+            -Dspring.datasource.url=jdbc:postgresql://localhost:5432/noisevision \
             -Dspring.datasource.username=${DB_USER} \
             -Dspring.datasource.password=${DB_PASSWORD} \
             -Dspring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect \

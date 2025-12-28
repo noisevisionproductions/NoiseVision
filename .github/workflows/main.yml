@@ -1,4 +1,4 @@
-name: Portfolio CI
+name: NoiseVision CI
 
 on:
   push:
@@ -81,7 +81,7 @@ jobs:
           cat << EOF > backend/src/test/resources/application-test.yml
           spring:
             application:
-              name: portfolio-backend
+              name: noisevision-backend
             datasource:
               url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
               username: sa

@@ -10,11 +10,11 @@
         <version>3.4.0</version>
         <relativePath/>
     </parent>
-    <groupId>com.noisevisionproductions</groupId>
-    <artifactId>portfolio-backend</artifactId>
+    <groupId>com.noisevisionsoftware</groupId>
+    <artifactId>noisevision</artifactId>
     <version>0.0.1</version>
-    <name>portfolio-backend</name>
-    <description>Backend for my portfolio website.</description>
+    <name>noise-vision-backend</name>
+    <description>Noise Vision website.</description>
     <properties>
         <java.version>21</java.version>
         <maven.compiler.source>21</maven.compiler.source>

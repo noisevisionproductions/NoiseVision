@@ -1,0 +1,6 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-f', '.docker/Dockerfile', '-t', 'europe-central2-docker.pkg.dev/$PROJECT_ID/noisevision-repo/backend:latest', '.']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'europe-central2-docker.pkg.dev/$PROJECT_ID/noisevision-repo/backend:latest']

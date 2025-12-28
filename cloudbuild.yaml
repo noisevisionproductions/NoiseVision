@@ -1,0 +1,9 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/noisevision/noisevision', '.']
+
+images:
+  - 'gcr.io/noisevision/noisevision'
+
+options:
+  logging: CLOUD_LOGGING_ONLY

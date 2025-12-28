@@ -1,22 +1,15 @@
-FROM eclipse-temurin:21-jdk-alpine as build
-
+FROM eclipse-temurin:21-jdk-alpine AS builder
 WORKDIR /workspace/app
-
-COPY ../mvnw .
-COPY ../.mvn .mvn
-COPY ../pom.xml .
-COPY ../src src
-
-RUN chmod +x mvnw
-
-RUN ./mvnw clean package -DskipTests
+COPY mvnw .
+COPY .mvn .mvn
+COPY pom.xml .
+RUN chmod +x ./mvnw
+RUN ./mvnw dependency:go-offline -B
+COPY src src
+RUN ./mvnw package -DskipTests
 
 FROM eclipse-temurin:21-jre-alpine
-
-COPY --from=build /workspace/app/target/*.jar app.jar
-
+WORKDIR /app
+COPY --from=builder /workspace/app/target/*.jar app.jar
 EXPOSE 8080
-
-ENV JAVA_OPTS="-XX:+UseParallelGC -XX:MaxRAMPercentage=75"
-
-ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar /app.jar"]
+CMD ["java", "-jar", "/app/app.jar"]

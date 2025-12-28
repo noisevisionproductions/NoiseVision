@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/PortfolioWeb.iml" filepath="$PROJECT_DIR$/.idea/PortfolioWeb.iml" />
-      <module fileurl="file://$PROJECT_DIR$/backend/portfolio-backend.iml" filepath="$PROJECT_DIR$/backend/portfolio-backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/NoiseVision.iml" filepath="$PROJECT_DIR$/.idea/NoiseVision.iml" />
     </modules>
   </component>
 </project>

@@ -1,0 +1,24 @@
+# frontend/app.yaml
+runtime: custom
+env: flex
+service: frontend-service
+
+handlers:
+  - url: /(.*\.(js|css|png|jpg|jpeg|gif|ico|json))$
+    static_files: dist/\1
+    upload: dist/.*\.(js|css|png|jpg|jpeg|gif|ico|json)$
+    secure: always
+
+  - url: /.*
+    static_files: dist/index.html
+    upload: dist/index.html
+    secure: always
+
+env_variables:
+  NODE_ENV: "production"
+  VITE_API_URL: "https://backend-service-dot-noisevision.lm.r.appspot.com"
+
+resources:
+  cpu: 1
+  memory_gb: 2
+  disk_size_gb: 10

@@ -2,7 +2,7 @@ name: Discord Notifications
 
 on:
   workflow_run:
-    workflows: [ "Portfolio CI" ]
+    workflows: [ "NoiseVision CI" ]
     types: [ completed ]
 
 jobs:
