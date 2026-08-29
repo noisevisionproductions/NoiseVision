@@ -76,7 +76,7 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
 
         // Dodaj wszystkie możliwe adresy produkcyjne i deweloperskie
-        configuration.setAllowedOrigins(Arrays.asList(
+        configuration.setAllowedOriginPatterns(Arrays.asList(
                 "http://localhost:3000",          // development
                 "http://localhost",               // local docker
                 "https://noisevision.app",        // przykładowa domena produkcyjna

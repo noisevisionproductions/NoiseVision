@@ -6,6 +6,7 @@ import org.noisevisionproductions.noisevision.projectsManagement.service.mainPro
 import org.noisevisionproductions.noisevision.projectsManagement.service.mainProjectService.ProjectService;
 import org.noisevisionproductions.noisevision.projectsManagement.dto.ProjectDTO;
 import org.noisevisionproductions.noisevision.projectsManagement.model.Project;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +27,7 @@ public class ProjectController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('CREATE_PROJECTS')")
-    public ResponseEntity<ProjectDTO> createProject(@RequestBody ProjectDTO projectDTO) {
+    public ResponseEntity<ProjectDTO> createProject(@Valid @RequestBody ProjectDTO projectDTO) {
         Project created = projectService.createProject(projectDTO);
         if (created.getId() == null) {
             throw new RuntimeException("Project ID was not generated");
@@ -62,7 +63,7 @@ public class ProjectController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('EDIT_PROJECTS')")
-    public ResponseEntity<ProjectDTO> updateProject(@PathVariable Long id, @RequestBody ProjectDTO projectDTO) {
+    public ResponseEntity<ProjectDTO> updateProject(@PathVariable Long id, @Valid @RequestBody ProjectDTO projectDTO) {
         Project updated = projectService.updateProject(id, projectDTO);
         return ResponseEntity.ok(projectMapper.toDTO(updated));
     }

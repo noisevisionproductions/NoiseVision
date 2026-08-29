@@ -23,7 +23,7 @@ class JwtServiceTest {
 
     private JwtService jwtService;
     private UserDetails userDetails;
-    private static final String SECRET_KEY = "12345";
+    private static final String SECRET_KEY = "wzBkgD52mzldGKT/sAydn4SmCXlYO/EfbjGTq1UHH2M=";
     private static final long JWT_EXPIRATION = 86400000;
 
     @BeforeEach

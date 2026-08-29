@@ -1,6 +1,14 @@
 package org.noisevisionproductions.noisevision.intergration.kafka;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doAnswer;
+
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
 import org.noisevisionproductions.noisevision.auth.security.JwtAuthFilter;
 import org.noisevisionproductions.noisevision.auth.security.JwtService;
 import org.noisevisionproductions.noisevision.intergration.config.KafkaTestConfig;
@@ -13,6 +21,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.noisevisionproductions.noisevision.auth.component.CustomAuthenticationProvider;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -34,6 +43,20 @@ public class RegistrationStatsControllerTest {
 
     @MockitoBean
     private JwtAuthFilter jwtAuthFilter;
+
+    @MockitoBean
+    private CustomAuthenticationProvider customAuthenticationProvider;
+
+    @BeforeEach
+    void setUp() throws Exception {
+        doAnswer(invocation -> {
+            ServletRequest request = invocation.getArgument(0);
+            ServletResponse response = invocation.getArgument(1);
+            FilterChain chain = invocation.getArgument(2);
+            chain.doFilter(request, response);
+            return null;
+        }).when(jwtAuthFilter).doFilter(any(), any(), any());
+    }
 
     @Test
     void shouldReturnUnauthorizedWhenNoAuthentication() throws Exception {

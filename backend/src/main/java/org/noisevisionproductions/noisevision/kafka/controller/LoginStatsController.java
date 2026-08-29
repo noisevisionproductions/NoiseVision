@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/kafka/stats/logins")
-@PreAuthorize("hasAuthority('ACCESS_KAFKA_DASHBOARD'")
+@PreAuthorize("hasAuthority('ACCESS_KAFKA_DASHBOARD')")
 public class LoginStatsController extends BaseKafkaStatsController<LoginEventEntity, LoginStatsService> {
     public LoginStatsController(LoginStatsService statsService) {
         super(statsService);

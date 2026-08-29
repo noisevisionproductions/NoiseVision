@@ -17,9 +17,11 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.junit.jupiter.Container;
+import redis.embedded.RedisServer;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 
+import java.io.IOException;
 import java.time.Duration;
 
 @TestConfiguration
@@ -27,20 +29,31 @@ import java.time.Duration;
 @EnableCaching
 public class TestRedisConfiguration {
 
-    @Container
-    private static final GenericContainer<?> REDIS_CONTAINER =
-            new GenericContainer<>("redis:7.2-alpine")
-                    .withExposedPorts(6379);
+    private RedisServer redisServer;
 
-    static {
-        REDIS_CONTAINER.start();
+    @PostConstruct
+    public void startRedis() throws Exception {
+        redisServer = new RedisServer(6379);
+        try {
+            redisServer.start();
+        } catch (Exception e) {
+            // Port might be in use or other issue, try falling back
+            System.out.println("Failed to start embedded redis: " + e.getMessage());
+        }
+    }
+
+    @PreDestroy
+    public void stopRedis() throws IOException {
+        if (redisServer != null) {
+            redisServer.stop();
+        }
     }
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
         RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
-        configuration.setHostName(REDIS_CONTAINER.getHost());
-        configuration.setPort(REDIS_CONTAINER.getFirstMappedPort());
+        configuration.setHostName("localhost");
+        configuration.setPort(6379);
         return new LettuceConnectionFactory(configuration);
     }
 
