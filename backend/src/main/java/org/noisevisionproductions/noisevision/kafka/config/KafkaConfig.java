@@ -1,10 +1,8 @@
 package org.noisevisionproductions.noisevision.kafka.config;
 
-import lombok.NonNull;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.noisevisionproductions.noisevision.kafka.event.dto.UserRegistrationEvent;
@@ -15,16 +13,9 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.kafka.core.*;
-import org.springframework.kafka.listener.DeadLetterPublishingRecoverer;
-import org.springframework.kafka.listener.DefaultErrorHandler;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.support.serializer.JsonSerializer;
-import org.springframework.util.backoff.BackOff;
-import org.springframework.util.backoff.BackOffExecution;
-import org.springframework.web.client.HttpServerErrorException;
-import org.springframework.web.client.ResourceAccessException;
 
-import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -79,53 +70,5 @@ public class KafkaConfig {
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;
-    }
-
-    @Bean
-    public NewTopic projectWebhooksTopic() {
-        return TopicBuilder.name("project-webhooks").partitions(1).replicas(1).build();
-    }
-
-    @Bean
-    public NewTopic projectWebhooksDltTopic() {
-        return TopicBuilder.name("project-webhooks-failed").partitions(1).replicas(1).build();
-    }
-
-    @Bean
-    public DefaultErrorHandler errorHandler(KafkaTemplate<String, Object> kafkaTemplate) {
-        DeadLetterPublishingRecoverer deadLetterPublishingRecoverer = new DeadLetterPublishingRecoverer(kafkaTemplate,
-                (record, ex) -> new TopicPartition(record.topic() + "-failed", record.partition()));
-
-        DefaultErrorHandler defaultErrorHandler = getDefaultErrorHandler(deadLetterPublishingRecoverer);
-
-        defaultErrorHandler.addRetryableExceptions(
-                HttpServerErrorException.class,
-                ResourceAccessException.class,
-                ConnectException.class
-        );
-
-        return defaultErrorHandler;
-    }
-
-    private static @NonNull DefaultErrorHandler getDefaultErrorHandler(DeadLetterPublishingRecoverer deadLetterPublishingRecoverer) {
-        BackOff customBackOff = new BackOff() {
-
-            @Override
-            @NonNull
-            public BackOffExecution start() {
-                return new BackOffExecution() {
-                    private int attempt = 0;
-                    private final long[] intervals = {3000L, 7000L, 15000L};
-
-                    @Override
-                    public long nextBackOff() {
-                        if (attempt >= intervals.length) return BackOffExecution.STOP;
-                        return intervals[attempt++];
-                    }
-                };
-            }
-        };
-
-        return new DefaultErrorHandler(deadLetterPublishingRecoverer, customBackOff);
     }
 }
