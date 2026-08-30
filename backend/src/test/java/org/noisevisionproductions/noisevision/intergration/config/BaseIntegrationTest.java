@@ -13,9 +13,7 @@ import java.util.Objects;
 @SpringBootTest
 @ActiveProfiles("test")
 @TestPropertySource(properties = {
-        "spring.test.constructor.autowire.mode=all",
-        "logging.level.org.springframework.test.context=DEBUG",
-        "logging.exception-conversion-word=%wEx{full}"
+        "spring.test.constructor.autowire.mode=all"
 })
 public class BaseIntegrationTest {
 

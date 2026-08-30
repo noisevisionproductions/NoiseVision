@@ -20,6 +20,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import redis.embedded.RedisServer;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
+import redis.embedded.core.RedisServerBuilder;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -33,7 +34,10 @@ public class TestRedisConfiguration {
 
     @PostConstruct
     public void startRedis() throws Exception {
-        redisServer = new RedisServer(6379);
+        redisServer = new RedisServerBuilder()
+                .port(6379)
+                .setting("maxmemory 128M")
+                .build();
         try {
             redisServer.start();
         } catch (Exception e) {

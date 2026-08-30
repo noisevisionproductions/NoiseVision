@@ -20,10 +20,10 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
-        format_sql: true
+        format_sql: false
         dialect: org.hibernate.dialect.H2Dialect
 
   redis:
@@ -52,3 +52,7 @@ logging:
   level:
     root: INFO
     org.springframework.boot.autoconfigure: ERROR
+    org.apache.kafka: WARN
+    kafka: WARN
+    org.springframework.kafka: WARN
+    com.github.tomakehurst.wiremock: WARN
