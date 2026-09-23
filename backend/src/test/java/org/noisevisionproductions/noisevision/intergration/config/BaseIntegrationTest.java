@@ -29,14 +29,13 @@ public class BaseIntegrationTest {
         cleanupRedis();
     }
 
-    private void cleanupRedis() {
+    private void cleanupDatabase() {
         projectRepository.deleteAll();
     }
 
-    private void cleanupDatabase() {
-        Objects.requireNonNull(redisTemplate.getConnectionFactory())
-                .getConnection()
-                .serverCommands()
-                .flushAll();
+    private void cleanupRedis() {
+        try (var connection = Objects.requireNonNull(redisTemplate.getConnectionFactory()).getConnection()) {
+            connection.serverCommands().flushAll();
+        }
     }
 }
